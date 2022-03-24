@@ -84,8 +84,6 @@ class Mine(nn.Module):
             x = torch.from_numpy(x).float()
         if isinstance(z, np.ndarray):
             z = torch.from_numpy(z).float()
-
-        with torch.no_grad():
             mi = -self.forward(x, z, z_marg)
         return mi
 

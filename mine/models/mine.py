@@ -10,9 +10,6 @@ torch.autograd.set_detect_anomaly(True)
 
 EPS = 1e-6
 
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
-
 
 class EMALoss(torch.autograd.Function):
     @staticmethod
@@ -50,6 +47,7 @@ def ema_loss(x, running_mean, alpha):
 class Mine(nn.Module):
     def __init__(self, T, loss='mine', alpha=0.01, method=None):
         super().__init__()
+        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.running_mean = 0
         self.loss = loss
         self.alpha = alpha
@@ -57,13 +55,15 @@ class Mine(nn.Module):
 
         if method == 'concat':
             if isinstance(T, nn.Sequential):
-                self.T = CustomSequential(ConcatLayer(), *T)
+                self.T = CustomSequential(ConcatLayer(), *T).to(self.device)
             else:
-                self.T = CustomSequential(ConcatLayer(), T)
+                self.T = CustomSequential(ConcatLayer(), T).to(self.device)
         else:
-            self.T = T
+            self.T = T.to(self.device)
 
     def forward(self, x, z, z_marg=None):
+        x = x.to(self.device)
+        z = z.to(self.device)
         if z_marg is None:
             z_marg = z[torch.randperm(x.shape[0])]
 

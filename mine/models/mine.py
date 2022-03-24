@@ -6,8 +6,6 @@ from  mine.utils.helpers import batch
 
 from mine.models.layers import ConcatLayer, CustomSequential
 
-torch.autograd.set_detect_anomaly(True)
-
 EPS = 1e-6
 
 
@@ -107,7 +105,6 @@ class Mine(nn.Module):
                 mu_mi -= loss.item()
             if iter % (iters // 3) == 0:
                 pass
-                #print(f"It {iter} - MI: {mu_mi / batch_size}")
 
         final_mi = self.mi(X, Y)
         return final_mi

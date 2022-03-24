@@ -1,13 +1,5 @@
-import os
-import matplotlib.pyplot as plt
 import numpy as np
-import random
 import torch
-PLOT_DIR = 'figures'
-
-if not os.path.exists(PLOT_DIR):
-    os.mkdir(PLOT_DIR)
-
 
 def batch(x, y, batch_size=1, shuffle=True):
     assert len(x) == len(
@@ -32,47 +24,3 @@ def batch(x, y, batch_size=1, shuffle=True):
         batches.append((x_b, y_b))
     return batches
 
-
-class AverageMeter:
-    def __init__(self, name='', percentage=False):
-        self.mu = 0
-        self.n = 0
-        self.mus = []
-        self.name = name
-        self.percentage = percentage
-
-    def __add__(self, total_mean, mu, x):
-        n = len(total_mean)
-        mu = (mu * n + x) / (n + 1)
-        total_mean.append(mu)
-
-        return total_mean
-
-    def add(self, x):
-        total_mean = self.__add__(self.mus, self.mu, x)
-        self.mu = total_mean[-1]
-        self.mus = total_mean
-        self.n = len(self.mus)
-
-    def reset(self):
-        self.mu = 0
-        self.n = 0
-        self.mus = []
-
-    def plot(self, save=False):
-        plt.figure()
-        plt.scatter(np.arange(self.n), self.mus)
-        if save:
-            plt.savefig(f"{PLOT_DIR}/{self.name}_run_{self.n}.png")
-        plt.close()
-
-    def __str__(self):
-        if self.percentage:
-            mu = self.mu * 100
-        else:
-            mu = self.mu
-        return "{} average: {:3g}".format(self.name, mu)
-
-    @property
-    def value(self):
-        return self.mu

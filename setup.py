@@ -15,15 +15,12 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.9',
     install_requires = [
-        'pytorch_lightning==0.6.0',
-        'matplotlib==3.1.2',
-        'numpy==1.17.4',
-        'tqdm==4.40.2',
-        'torch==1.3.1',
-        'torchvision==0.4.2',
-        'scikit_learn==0.22.1',
-        'pillow<7'
+        'pytorch_lightning',
+        'numpy',
+        'torch',
+        'torchvision',
+        'scikit_learn',
     ]
 )

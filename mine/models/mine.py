@@ -84,7 +84,7 @@ class Mine(nn.Module):
             x = torch.from_numpy(x).float()
         if isinstance(z, np.ndarray):
             z = torch.from_numpy(z).float()
-            mi = -self.forward(x, z, z_marg)
+        mi = -self.forward(x, z, z_marg)
         return mi
 
     def optimize(self, X, Y, iters, batch_size, opt=None):
@@ -103,8 +103,5 @@ class Mine(nn.Module):
                 mu_mi -= loss.item()
             if iter % (iters // 3) == 0:
                 pass
-
-        final_mi = self.mi(X, Y)
-        return final_mi
 
 

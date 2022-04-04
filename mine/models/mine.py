@@ -97,7 +97,7 @@ class Mine(nn.Module):
             for x, y in batch(X, Y, batch_size):
                 opt.zero_grad()
                 loss = self.forward(x, y)
-                loss.backward()
+                loss.backward(retain_graph=True)
                 opt.step()
 
                 mu_mi -= loss.item()

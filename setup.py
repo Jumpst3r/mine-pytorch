@@ -17,10 +17,7 @@ setuptools.setup(
     ],
     python_requires='>=3.9',
     install_requires = [
-        'pytorch_lightning',
-        'numpy',
-        'torch',
-        'torchvision',
-        'scikit_learn',
+        'torch @ http://download.pytorch.org/whl/cpu/torch-1.11.0%2Bcpu-cp310-cp310-linux_x86_64.whl',
+        'numpy'
     ]
 )
